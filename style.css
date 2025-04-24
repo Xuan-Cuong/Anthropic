@@ -1,0 +1,1088 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Updated Color Palette - Richer Dark, Vibrant Accents */
+    --background-dark: #0f172a; /* Slate 950 */
+    --background-light: #f8fafc; /* Lighter background for dropdowns - Slate 50 */
+    --background-dropdown-hover: #e2e8f0; /* Slate 200 */
+    --text-light: #f8fafc; /* Slate 50 */
+    --text-dark: #0f172a; /* Slate 950 */
+    --text-muted-light: #94a3b8; /* Slate 400 */
+    --text-muted-dark: #475569; /* Slate 600 - For dropdown headings */
+    --primary-accent: #7c3aed; /* Violet 600 */
+    --primary-accent-hover: #6d28d9; /* Violet 700 */
+    --secondary-accent: #14b8a6; /* Teal 500 */
+    --border-color-light: #cbd5e1; /* Slate 300 */
+    --border-color-dark: #334155; /* Slate 700 */
+    --card-bg-light: #ffffff;
+    --card-bg-dark: #1e293b; /* Slate 800 */
+    --card-bg-hover: #334155; /* Slate 700 - More distinct hover */
+    --link-color: var(--secondary-accent);
+    --link-hover-color: var(--text-light); /* Hover to white for better contrast */
+    --code-bg: #334155; /* Slate 700 */
+    --code-text: #e2e8f0; /* Slate 200 */
+    --megamenu-image-bg: #fbece7; /* Example background color from image */
+
+    --font-primary: 'Poppins', sans-serif;
+    --font-secondary: 'Roboto Mono', monospace;
+
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.1); /* Enhanced shadow */
+    --shadow-glow: 0 0 15px 0 rgba(124, 58, 237, 0.3); /* Glow effect for primary accent */
+
+    --transition-speed: 0.3s ease; /* Slightly slower for smoother feel */
+    --transition-bounce: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bounce effect */
+}
+
+html {
+    scroll-behavior: smooth; /* Enable smooth scrolling globally */
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--background-dark);
+    color: var(--text-light);
+    line-height: 1.7; /* Increased for readability */
+    font-size: 16.5px; /* Slightly larger base font */
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Utility Classes */
+.page-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px; /* Slightly more padding */
+}
+
+.h1 {
+    font-size: 3rem;
+    font-weight: 800; /* Bolder */
+    margin-bottom: 1.5rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em; /* Tighter spacing */
+}
+
+.h2 {
+    font-size: 2.25rem; /* Adjusted size */
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.display-sans-m {
+    font-size: 1.75rem; /* Adjusted size */
+    font-weight: 600;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    color: var(--text-light);
+}
+
+.display-sans-s {
+    font-size: 1.125rem; /* Standard text size but bold */
+}
+
+.detail-m {
+    font-size: 0.9rem;
+}
+.detail-s {
+    font-size: 0.8rem;
+}
+
+.agate {
+    color: var(--text-muted-light);
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.uppercase {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.text-label {
+    font-size: 0.85rem;
+    color: var(--text-muted-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.icon {
+    display: inline-block;
+    vertical-align: middle;
+    width: 1.1em; /* Slightly larger icons */
+    height: 1.1em;
+}
+
+/* Header Styles */
+.site-header {
+    background-color: rgba(15, 23, 42, 0.85); /* Updated bg color (Slate 950 with alpha) */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); /* Safari */
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color-dark);
+    box-shadow: var(--shadow-md);
+    transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.header-root {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-link {
+    text-decoration: none;
+    transition: transform var(--transition-bounce); /* Fun hover effect */
+}
+.logo-link:hover {
+    transform: scale(1.05);
+}
+
+.logo-text {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--text-light);
+    letter-spacing: -1.5px;
+    transition: color var(--transition-speed);
+}
+.logo-link:hover .logo-text {
+    color: var(--primary-accent);
+}
+
+.header-content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-nav {
+    display: none; /* Hidden by default on mobile */
+    align-items: center; /* Vertically align all items */
+    gap: 1.8rem; /* Increased spacing */
+}
+
+.nav-item {
+    display: flex; /* Ensure items within align */
+    align-items: center;
+    position: relative; /* For dropdown positioning */
+}
+
+.nav-link {
+    display: flex; /* Ensure items within align */
+    align-items: center;
+    text-decoration: none; /* Remove default link underline */
+}
+
+.nav-text {
+    font-family: var(--font-primary);
+    font-size: 0.95rem; /* Slightly larger nav text */
+    font-weight: 500;
+    color: var(--text-muted-light);
+    background: none;
+    border: none;
+    padding: 0.5rem 0; /* Vertical padding only */
+    cursor: pointer;
+    transition: color var(--transition-speed);
+    position: relative; /* For pseudo-element underline */
+    text-decoration: none; /* Ensure link text has no underline */
+}
+
+/* Underline effect for items WITHOUT dropdowns */
+.nav-item.no-dropdown .nav-text::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px; /* Position slightly below text */
+    left: 0;
+    background-color: var(--primary-accent);
+    transform: scaleX(0); /* Start scaled to 0 */
+    transform-origin: center; /* Grow from center */
+    transition: transform var(--transition-speed);
+}
+
+.nav-item:hover .nav-text {
+    color: var(--text-light);
+}
+.nav-item.no-dropdown:hover .nav-text::after {
+     transform: scaleX(1); /* Scale to full width on hover */
+}
+
+
+/* --- Header Dropdown Styles --- */
+.nav-dropdown {
+    display: none; /* Hidden by default */
+    position: absolute;
+    /* top: calc(100% + 10px); */ /* Original */
+    top: 100%; /* Remove the gap */
+    left: 0;
+    background-color: var(--background-light); /* Light background */
+    color: var(--text-dark); /* Dark text */
+    min-width: 245px; /* Minimum width */
+    z-index: 110; /* Above other content */
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color-light); 
+    opacity: 0; /* Start hidden for transition */
+    visibility: hidden;
+    transform: translateY(10px); /* Start slightly lower */
+    /* Add delay to visibility when hiding */
+    transition: opacity var(--transition-speed), visibility 0s var(--transition-speed), transform var(--transition-speed);
+}
+
+/* Show dropdown on hover (desktop) */
+.nav-item:hover > .nav-dropdown {
+    display: block; /* Needed for visibility transition */
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    /* Remove delay for visibility when showing */
+    transition: opacity var(--transition-speed), visibility 0s, transform var(--transition-speed);
+}
+
+.nav-dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.nav-dropdown li {
+    margin-bottom: 0.25rem; /* Tighter spacing in dropdown */
+}
+.nav-dropdown .dropdown-link { /* Target links inside dropdown */
+    color: var(--text-dark);
+    text-decoration: none;
+    display: block; /* Make links block */
+    padding: 0.5rem 0.75rem; /* Padding */
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 400; /* Normal weight */
+    transition: background-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap; /* Prevent wrapping */
+}
+ .nav-dropdown .dropdown-link:hover {
+     background-color: var(--background-dropdown-hover); /* Use hover variable */
+     color: var(--text-dark); /* Keep text dark on hover */
+ }
+
+.dropdown-heading {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    padding: 0.2rem 0.75rem; /* Align padding with links */
+    color: var(--text-muted-dark); /* Muted heading color */
+    font-size: 0.8rem; /* Smaller heading */
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+.dropdown-heading-spacer { /* For headings used as spacers */
+     margin-top: 1rem;
+}
+
+.dropdown-link-external {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem; /* Space between text and icon */
+}
+.external-icon {
+    width: 0.9em; /* Slightly smaller icon */
+    height: 0.9em;
+    opacity: 0.7;
+    flex-shrink: 0; /* Prevent icon shrinking */
+    transition: opacity 0.2s ease;
+}
+.dropdown-link-external:hover .external-icon {
+    opacity: 1;
+}
+
+/* --- Megamenu Specific Styles --- */
+.nav-dropdown.megamenu {
+    display: none; /* Overrides block, flex is applied on hover */
+    /* width: max-content; */ /* Let width be controlled by columns */
+    max-width: 400px; /* Adjusted max-width since image is gone */
+    padding: 1.5rem; /* More padding for megamenu */
+    left: 50%; /* Center below parent */
+    /* transform: translateX(-50%) translateY(10px); */ /* Original */
+    transform: translateX(-50%) translateY(0); /* Adjust transform since top changed */
+    gap: 0; /* Remove gap here, handle in children */
+    flex-direction: column; /* Stack columns and bottom links */
+    opacity: 0; /* Start hidden for transition */
+    visibility: hidden;
+     /* Add delay to visibility when hiding */
+    transition: opacity var(--transition-speed), visibility 0s var(--transition-speed), transform var(--transition-speed);
+
+}
+.nav-item:hover > .nav-dropdown.megamenu {
+    display: flex; /* Use flex for layout */
+    opacity: 1;
+    visibility: visible;
+    /* transform: translateX(-50%) translateY(0); */ /* Keep this */
+     /* Remove delay for visibility when showing */
+    transition: opacity var(--transition-speed), visibility 0s, transform var(--transition-speed);
+}
+
+.megamenu-columns {
+    display: flex;
+    gap: 2rem; /* Space between columns */
+    width: 100%;
+}
+ .megamenu-column {
+     flex: 1;
+ }
+
+/* Remove or comment out styles for the image column */
+ /*
+ .megamenu-image-col {
+    background-color: var(--megamenu-image-bg);
+    border-radius: 6px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+ }
+ .megamenu-image-col img {
+    max-width: 100px;
+    height: auto;
+    margin-bottom: 0.75rem;
+ }
+ .megamenu-image-col .news-label {
+     font-size: 0.75rem;
+     color: var(--text-muted-dark);
+     display: block;
+     margin-bottom: 0.25rem;
+     text-transform: uppercase;
+ }
+  .megamenu-image-col .news-title {
+     font-weight: 600;
+     font-size: 0.95rem;
+     color: var(--text-dark);
+     text-decoration: none;
+     display: block;
+     transition: color 0.2s ease;
+ }
+ .megamenu-image-col .news-title:hover {
+    color: var(--primary-accent);
+ }
+ */
+
+ .megamenu-bottom-links {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color-light);
+ }
+ .megamenu-bottom-links ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem; /* Spacing for bottom links */
+ }
+ /* --- End Header Dropdown Styles --- */
+
+
+.button-cta {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent));
+    color: #fff;
+    padding: 0.7rem 1.4rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: transform var(--transition-bounce), box-shadow var(--transition-speed), filter var(--transition-speed);
+    border: none;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    margin-left: 25px;
+}
+
+.button-cta:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    filter: brightness(1.15);
+}
+
+.mobile-icon {
+    display: block; /* Show mobile icon by default */
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color var(--transition-speed), transform var(--transition-speed);
+    z-index: 102; /* Above mobile nav container */
+    position: relative; /* Needed for z-index */
+}
+.mobile-icon:hover {
+    color: var(--primary-accent);
+    transform: rotate(90deg); /* Rotate icon on hover */
+}
+.mobile-icon .icon-close { display: none; }
+.mobile-icon .icon-menu { display: block; }
+
+/* Mobile Nav Open State */
+.nav-open .mobile-icon .icon-close { display: block; }
+.nav-open .mobile-icon .icon-menu { display: none; }
+.nav-open .mobile-icon:hover { transform: rotate(0deg); } /* Reset rotation when open */
+
+.mobile-nav-container {
+    position: absolute;
+    top: 100%; /* Position below header */
+    left: 0;
+    right: 0;
+    background-color: var(--background-dark);
+    padding: 0; /* Remove padding, handled by mobile-nav */
+    border-top: 1px solid var(--border-color-dark);
+    box-shadow: var(--shadow-lg);
+    max-height: 0; /* Start closed */
+    overflow-y: auto; /* Allow vertical scroll if content overflows */
+    overflow-x: hidden;
+    transition: max-height 0.4s ease-out; /* Smooth transition */
+    z-index: 99;
+}
+
+.nav-open .mobile-nav-container {
+     max-height: calc(100vh - 80px); /* Adjust height considering header height */
+}
+
+.mobile-nav {
+    padding: 1rem 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Space between mobile items */
+}
+
+/* Styling for cloned nav items in mobile */
+.mobile-nav .nav-item,
+.mobile-nav .nav-link {
+    width: 100%;
+    text-align: left;
+    display: block; /* Ensure full width */
+    padding: 0; /* Remove padding here, apply to inner elements */
+    border-radius: 6px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    position: static; /* Override relative positioning */
+}
+.mobile-nav .nav-link {
+     padding: 0.8rem 0.5rem; /* Add padding back to the link itself */
+}
+
+.mobile-nav .nav-text {
+    width: 100%;
+    text-align: left;
+    color: var(--text-muted-light);
+    padding: 0.8rem 0.5rem; /* Consistent padding */
+    display: block; /* Ensure it takes full width */
+}
+
+.mobile-nav .nav-item:hover,
+.mobile-nav .nav-link:hover {
+    background-color: var(--card-bg-dark); /* Subtle hover background */
+}
+.mobile-nav .nav-item:hover .nav-text,
+.mobile-nav .nav-link:hover .nav-text {
+    color: var(--text-light);
+}
+
+.mobile-nav .nav-text::after {
+    display: none; /* Hide underline effect on mobile dropdown */
+}
+
+/* Hide dropdowns in mobile nav by default (JS would be needed to toggle them) */
+.mobile-nav .nav-dropdown {
+    display: none !important; /* Force hide - Need JS to manage this */
+    position: static; /* Reset absolute positioning */
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0 0 0 1rem; /* Indent submenu items */
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    color: var(--text-muted-light);
+}
+.mobile-nav .nav-dropdown .dropdown-link {
+    color: var(--text-muted-light);
+    font-size: 0.9rem;
+    padding: 0.5rem;
+}
+.mobile-nav .nav-dropdown .dropdown-link:hover {
+     color: var(--text-light);
+     background-color: var(--card-bg-hover);
+}
+.mobile-nav .dropdown-heading {
+    color: var(--text-light);
+    font-size: 0.85rem;
+    padding: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+.mobile-nav .megamenu-image-col, /* Ensure these are hidden on mobile */
+.mobile-nav .megamenu-bottom-links {
+    display: none; /* Hide complex megamenu parts on mobile */
+}
+.mobile-nav .external-icon {
+    display: none; /* Hide external icons on mobile */
+}
+
+
+/* Skip Links */
+.skip-links {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 101; /* Above header */
+}
+.skip-link {
+    position: absolute;
+    left: -9999px; /* Hide off-screen */
+    padding: 0.7em 1.2em;
+    background-color: var(--primary-accent);
+    color: #fff;
+    text-decoration: none;
+    transition: left 0.2s ease-in-out, transform 0.2s ease-in-out; /* Added transform */
+    border-radius: 0 0 6px 6px;
+    font-weight: 500;
+    box-shadow: var(--shadow-md);
+}
+.skip-link:focus {
+    left: 50%;
+    transform: translateX(-50%);
+    outline: 2px solid var(--secondary-accent);
+    outline-offset: 2px;
+}
+
+/* Main Content Styles */
+.main-content {
+    padding-top: 4rem; /* More space */
+    padding-bottom: 5rem;
+}
+
+.post-detail-wrapper .page-wrapper {
+    max-width: 840px; /* Slightly wider content */
+}
+
+.post-heading {
+    margin-bottom: 3.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color-dark);
+    padding-bottom: 2.5rem;
+}
+
+.post-detail-types-subjects {
+    margin-bottom: 1.25rem;
+}
+
+.chip {
+    display: inline-block;
+    background-color: rgba(124, 58, 237, 0.15); /* primary accent with alpha */
+    color: var(--primary-accent);
+    padding: 0.35rem 0.85rem;
+    border-radius: 1rem;
+    font-weight: 600; /* Bolder chip text */
+}
+
+.post-title {
+    color: var(--text-light);
+    font-size: 3rem; /* Adjusted in h1 style */
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3); /* Subtle text shadow */
+}
+
+.post-timestamp {
+    margin-top: 1.25rem;
+}
+
+.post-timestamp .is-bullet {
+    margin: 0 0.6rem;
+    color: var(--text-muted-light);
+    opacity: 0.7;
+}
+
+.post-detail-body {
+    margin-top: 2.5rem;
+}
+
+.post-hero {
+    margin-bottom: 3rem;
+    overflow: hidden; /* Contain image animation */
+    border-radius: 12px; /* Match image */
+}
+
+.post-hero img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px; /* Softer edges */
+    box-shadow: var(--shadow-lg);
+    display: block;
+    transition: transform 0.6s ease-out; /* Smooth transition */
+}
+
+.image-with-caption {
+    margin: 0;
+}
+
+/* Post Content Typography */
+.post-content .body-text {
+    color: var(--text-light); /* Make body text slightly brighter */
+    opacity: 0.9;
+}
+
+.reading-column {
+    max-width: 700px; /* Optimal reading width */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.reading-column p,
+.reading-column ul,
+.reading-column blockquote {
+    margin-bottom: 1.75rem; /* More spacing */
+    font-size: 1.08rem; /* Slightly larger body text */
+}
+
+.reading-column h2 { /* Now uses .display-sans-m */
+     margin-top: 3.5rem;
+     margin-bottom: 1.5rem;
+}
+.reading-column h3 { /* Less common, smaller heading */
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+
+.reading-column a {
+    color: var(--link-color);
+    text-decoration: none;
+    /* More subtle underline effect */
+    background-image: linear-gradient(var(--link-color), var(--link-color));
+    background-position: 0% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px; /* Start with 0 width */
+    transition: background-size var(--transition-speed), color var(--transition-speed);
+    padding-bottom: 1px; /* Space for underline */
+}
+
+.reading-column a:hover {
+    color: var(--link-hover-color);
+    background-size: 100% 1px; /* Expand underline on hover */
+    background-image: linear-gradient(var(--link-hover-color), var(--link-hover-color));
+}
+
+.reading-column ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.reading-column ul li {
+    position: relative;
+    padding-left: 1.75em; /* More space for custom bullet */
+    margin-bottom: 0.85rem;
+}
+
+.reading-column ul li::before {
+    content: '❖'; /* More decorative bullet */
+    position: absolute;
+    left: 0;
+    top: 0.1em; /* Adjust vertical position */
+    color: var(--primary-accent);
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: transform var(--transition-bounce), color var(--transition-speed); /* Bounce effect */
+}
+
+.reading-column ul li:hover::before {
+     transform: translateX(5px) scale(1.1); /* Move and scale */
+     color: var(--secondary-accent); /* Change color on hover */
+}
+
+
+.reading-column blockquote {
+    border-left: 5px solid var(--primary-accent);
+    padding: 1.5rem 1.5rem 1.5rem 2rem; /* More padding */
+    margin-left: 0;
+    font-style: normal; /* Remove default italic */
+    color: var(--text-light);
+    background-color: rgba(30, 41, 59, 0.7); /* Slightly darker, more opaque bg */
+    border-radius: 0 8px 8px 0; /* Match other radii */
+    position: relative;
+    overflow: hidden;
+}
+/* Optional decorative quote mark */
+.reading-column blockquote::before {
+    content: '“';
+    position: absolute;
+    top: -0.1em;
+    left: 0.2em;
+    font-size: 4em;
+    color: var(--primary-accent);
+    opacity: 0.15;
+    line-height: 1;
+    z-index: 0;
+}
+.reading-column blockquote p {
+    position: relative;
+    z-index: 1;
+    font-size: 1.05rem; /* Slightly smaller quote text */
+    margin-bottom: 0; /* Remove margin for last p in quote */
+}
+
+
+.reading-column code, /* Inline code */
+span[style*="monospace"] /* Catching potential inline code spans */
+{
+    font-family: var(--font-secondary);
+    background-color: var(--code-bg);
+    color: var(--code-text);
+    padding: 0.25em 0.5em; /* Slightly more padding */
+    border-radius: 4px;
+    font-size: 0.9em;
+    border: 1px solid var(--border-color-dark); /* Subtle border */
+}
+
+/* Specific technical term styling */
+.technical-term .english {
+   font-family: var(--font-secondary);
+   color: var(--text-muted-light);
+   font-size: 0.9em;
+   opacity: 0.85;
+}
+
+/* Social Share */
+.social-share {
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border-color-dark);
+    text-align: center;
+    display: flex; /* Use flex for alignment */
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.share-label {
+    margin-right: 0; /* Removed margin, using gap */
+    color: var(--text-muted-light);
+    font-weight: 600;
+}
+
+.social-share a {
+    color: var(--text-muted-light);
+    margin: 0; /* Removed margin */
+    font-size: 1.6rem; /* Larger icons */
+    transition: color var(--transition-speed), transform var(--transition-bounce); /* Bounce effect */
+    display: inline-block; /* Needed for transform */
+}
+
+.social-share a:hover {
+    color: var(--primary-accent);
+    transform: scale(1.2) translateY(-3px); /* Pop out more */
+}
+
+/* Related Posts Section */
+.related-posts-section {
+    padding: 5rem 0;
+    background-color: var(--background-dark); /* Match body or slightly different */
+    border-top: 1px solid var(--border-color-dark);
+    overflow: hidden; /* Contain animations */
+}
+
+.related-title {
+    text-align: center;
+    margin-bottom: 3.5rem; /* More space */
+    color: var(--text-light);
+    font-size: 2.5rem; /* Match h2 style */
+}
+
+
+.card-row-root .page-wrapper {
+    max-width: 1200px; /* Wider for card layout */
+}
+
+.card-row-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Slightly larger min width */
+    gap: 2rem; /* Increased gap */
+}
+
+.card-link-root {
+    text-decoration: none;
+    display: block;
+    transition: transform var(--transition-bounce), box-shadow var(--transition-speed); /* Bounce effect */
+    border-radius: 12px; /* Match card */
+    overflow: hidden; /* Ensure hover effects contained */
+}
+
+
+.card-root {
+    background-color: var(--card-bg-dark);
+    border: 1px solid var(--border-color-dark);
+    border-radius: 12px; /* Softer corners */
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-md);
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.card-link-root:hover {
+    transform: translateY(-8px) scale(1.02); /* Lift and slightly enlarge */
+    box-shadow: var(--shadow-lg), var(--shadow-glow); /* Add glow on hover */
+}
+.card-link-root:hover .card-root {
+     border-color: var(--primary-accent);
+     background-color: var(--card-bg-hover);
+}
+
+.card-content {
+    padding: 1.75rem; /* More padding */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-headline-summary-wrapper {
+    margin-bottom: 1rem;
+}
+
+.card-category {
+    color: var(--primary-accent);
+    font-weight: 600; /* Bolder category */
+    margin-bottom: 0.6rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.card-headline {
+    font-size: 1.25rem; /* Slightly larger */
+    color: var(--text-light);
+    margin-bottom: 0;
+    line-height: 1.4; /* Improved line height */
+    transition: color var(--transition-speed);
+}
+.card-link-root:hover .card-headline {
+    color: var(--text-light); /* Ensure text stays bright on hover bg */
+}
+
+.card-date {
+    margin-top: 1.5rem; /* More space above date */
+    color: var(--text-muted-light);
+}
+
+
+/* Footer Styles */
+.site-footer {
+    background-color: #020617; /* Even darker footer - Slate 950/Black */
+    color: var(--text-muted-light);
+    padding: 4rem 0 2.5rem; /* More padding */
+    border-top: 1px solid var(--border-color-dark);
+    position: relative; /* For potential decorative elements */
+    overflow: hidden;
+}
+/* Optional subtle background pattern/gradient */
+.site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 300px; /* Adjust height */
+    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.1), rgba(15, 23, 42, 0)); /* Subtle gradient from top */
+    opacity: 0.5;
+    z-index: 0;
+}
+
+.footer-top-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+    align-items: center; /* Center logo on small screens */
+    position: relative; /* Ensure content above pseudo element */
+    z-index: 1;
+}
+
+.footer-logo-link {
+     text-decoration: none;
+     transition: transform var(--transition-bounce);
+}
+.footer-logo-link:hover {
+    transform: scale(1.05);
+}
+
+.footer-logo-text {
+     font-size: 1.7rem;
+     color: var(--text-muted-light);
+     font-weight: 700;
+     transition: color var(--transition-speed);
+     letter-spacing: -1px;
+}
+.footer-logo-link:hover .footer-logo-text {
+    color: var(--text-light);
+}
+
+
+.footer-columns-wrapper {
+    display: grid;
+    /* Adjusted grid layout for better readability */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Slightly wider min width */
+    gap: 3rem 2.5rem; /* Increased row and column gap */
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-column-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.footer-list-section h3 {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-size: 0.9rem; /* Slightly smaller heading */
+    font-weight: 600;
+}
+
+.footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem; /* Space between list items */
+}
+
+.footer-list-item {
+    display: block;
+    color: var(--text-muted-light);
+    text-decoration: none;
+    margin-bottom: 0; /* Use gap instead */
+    transition: color var(--transition-speed), transform var(--transition-bounce); /* Bounce effect */
+    position: relative;
+    padding-left: 0;
+    font-size: 0.9rem;
+}
+
+.footer-list-item:hover {
+    color: var(--text-light);
+    transform: translateX(5px); /* Shift right on hover */
+}
+
+.footer-bottom-wrapper {
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border-color-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem; /* Increased gap */
+    position: relative;
+    z-index: 1;
+}
+
+.footer-copyright {
+    color: var(--text-muted-light);
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.footer-social-icons {
+    display: flex;
+    gap: 1.25rem; /* More space */
+}
+
+.footer-social-icons a {
+    color: var(--text-muted-light);
+    font-size: 1.5rem; /* Larger icons */
+    transition: color var(--transition-speed), transform var(--transition-bounce);
+}
+
+.footer-social-icons a:hover {
+    color: var(--text-light);
+    transform: scale(1.2) translateY(-2px); /* Pop effect */
+}
+
+
+/* Media Queries for Responsiveness */
+@media (min-width: 768px) {
+    .header-nav {
+        display: flex; /* Show nav items */
+    }
+    .mobile-icon {
+        display: none; /* Hide mobile icon */
+    }
+    .mobile-nav-container {
+        display: none; /* Hide mobile nav container */
+    }
+    .post-title {
+        font-size: 3.5rem; /* Larger title on desktop */
+    }
+     .footer-top-wrapper {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    .footer-bottom-wrapper {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+}
+
+@media (min-width: 1024px) {
+     .page-wrapper {
+        padding: 0 32px; /* Even more padding on large screens */
+    }
+     .h1, .post-title {
+         font-size: 3.8rem;
+     }
+     .h2, .related-title {
+         font-size: 2.5rem;
+     }
+}
+
+
+/* --- Animation Classes --- */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px); /* Start slightly lower */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Add staggered delay for elements within a container if needed */
+.reading-column > .animate-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+.reading-column > .animate-on-scroll:nth-child(2) { transition-delay: 0.15s; }
+.reading-column > .animate-on-scroll:nth-child(3) { transition-delay: 0.2s; }
+.reading-column > .animate-on-scroll:nth-child(4) { transition-delay: 0.25s; }
+/* Add more as needed, or handle dynamically with JS */
+
+.card-row-items > .animate-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+.card-row-items > .animate-on-scroll:nth-child(2) { transition-delay: 0.2s; }
+.card-row-items > .animate-on-scroll:nth-child(3) { transition-delay: 0.3s; }

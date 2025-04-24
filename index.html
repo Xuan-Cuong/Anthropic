@@ -1,0 +1,405 @@
+<!DOCTYPE html >
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <title>Giới thiệu Giao thức Ngữ cảnh Mô hình (Model Context Protocol) | Anthropic</title>
+    <meta name="description" content="Giao thức Ngữ cảnh Mô hình (Model Context Protocol - MCP) là một tiêu chuẩn mở để kết nối các trợ lý AI với các hệ thống lưu trữ dữ liệu. Mục tiêu là giúp các mô hình tiên tiến tạo ra phản hồi tốt hơn, phù hợp hơn.">
+
+    <!-- Meta tags, favicons as before -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Giới thiệu Giao thức Ngữ cảnh Mô hình (Model Context Protocol)">
+    <meta property="og:description" content="Giao thức Ngữ cảnh Mô hình (Model Context Protocol - MCP) là một tiêu chuẩn mở để kết nối các trợ lý AI với các hệ thống lưu trữ dữ liệu. Mục tiêu là giúp các mô hình tiên tiến tạo ra phản hồi tốt hơn, phù hợp hơn.">
+    <meta property="og:image" content="https://cdn.sanity.io/images/4zrzovbb/website/1aef864f9b246c740fe3cef6e1068f2220995d5e-2400x1260.png">
+    <meta property="og:image:alt" content="Minh họa trừu tượng về ngữ cảnh quan trọng kết nối đến một trung tâm">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@AnthropicAI">
+    <meta name="twitter:creator" content="@AnthropicAI">
+    <meta name="twitter:title" content="Giới thiệu Giao thức Ngữ cảnh Mô hình (Model Context Protocol)">
+    <meta name="twitter:description" content="Giao thức Ngữ cảnh Mô hình (Model Context Protocol - MCP) là một tiêu chuẩn mở để kết nối các trợ lý AI với các hệ thống lưu trữ dữ liệu. Mục tiêu là giúp các mô hình tiên tiến tạo ra phản hồi tốt hơn, phù hợp hơn.">
+    <meta name="twitter:image" content="https://cdn.sanity.io/images/4zrzovbb/website/1aef864f9b246c740fe3cef6e1068f2220995d5e-2400x1260.png">
+    <meta name="twitter:image:alt" content="Minh họa trừu tượng về ngữ cảnh quan trọng kết nối đến một trung tâm">
+    <link rel="shortcut icon" href="https://www.anthropic.com/favicon.ico">
+    <link rel="icon" href="https://www.anthropic.com/images/icons/favicon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="https://www.anthropic.com/images/icons/apple-touch-icon.png" sizes="180x180">
+    <link rel="mask-icon" href="https://www.anthropic.com/images/icons/safari-pinned-tab.svg" color="#7c3aed">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Scripts -->
+    <script src="script.js" defer></script>
+
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="skip-links">
+            <a href="#main-content" class="skip-link">Bỏ qua đến nội dung chính</a>
+            <a href="#footer" class="skip-link">Bỏ qua đến chân trang</a>
+        </div>
+        <div class="page-wrapper header-root">
+            <a aria-label="Trang chủ" href="https://www.anthropic.com/" class="logo-link">
+                <span class="logo-text">ANTHROPIC</span>
+            </a>
+            <div class="header-content-wrapper">
+                <nav class="header-nav" aria-label="Điều hướng chính">
+
+                    <!-- Claude Dropdown (Megamenu) -->
+                    <div class="nav-item has-dropdown">
+                        <a href="#" class="nav-link"><span class="nav-text">Claude</span></a>
+                        <div class="nav-dropdown megamenu">
+                            <div class="megamenu-columns">
+                                <div class="megamenu-column">
+                                    <span class="dropdown-heading">Trò chuyện với Claude</span>
+                                    <ul>
+                                        <li><a href="https://www.anthropic.com/claude" class="dropdown-link">Tổng quan</a></li>
+                                        <li><a href="https://www.anthropic.com/team" class="dropdown-link">Gói Team</a></li>
+                                        <li><a href="https://www.anthropic.com/enterprise" class="dropdown-link">Gói Enterprise</a></li>
+                                        <li><a href="https://www.anthropic.com/education" class="dropdown-link">Gói Education</a></li>
+                                        <li><a href="https://www.anthropic.com/pricing" class="dropdown-link">Khám phá giá</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Removed Image Column -->
+                            </div>
+                            <div class="megamenu-bottom-links">
+                                <ul>
+                                   <li><a href="https://claude.ai/download" class="dropdown-link dropdown-link-external">Tải ứng dụng <svg class="external-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 13V19C18 19.5304 17.7893 20.0391 17.4142 20.4142C17.0391 20.7893 16.5304 21 16 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V8C3 7.46957 3.21071 6.96086 3.58579 6.58579C3.96086 6.21071 4.46957 6 5 6H11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 3H21V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </a></li>
+                                    <li><a href="https://claude.ai/login?returnTo=%2F%3F" class="dropdown-link dropdown-link-external">Đăng nhập Claude <svg class="external-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 13V19C18 19.5304 17.7893 20.0391 17.4142 20.4142C17.0391 20.7893 16.5304 21 16 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V8C3 7.46957 3.21071 6.96086 3.58579 6.58579C3.96086 6.21071 4.46957 6 5 6H11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 3H21V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- API Dropdown (Megamenu) -->
+                    <div class="nav-item has-dropdown">
+                        <a href="#" class="nav-link"><span class="nav-text">API</span></a>
+                        <div class="nav-dropdown megamenu">
+                             <div class="megamenu-columns">
+                                <div class="megamenu-column">
+                                    <span class="dropdown-heading">Nền tảng</span>
+                                    <ul>
+                                        <li><a href="https://www.anthropic.com/api" class="dropdown-link">Tổng quan</a></li>
+                                        <li><a href="https://docs.anthropic.com/en/home" class="dropdown-link dropdown-link-external">Tài liệu Nhà phát triển</a></li>
+                                        <li><a href="https://www.anthropic.com/pricing#api" class="dropdown-link">Khám phá giá cả</a></li>
+                                        <li><a href="https://console.anthropic.com/login?returnTo=%2F%3F" class="dropdown-link dropdown-link-external">Đăng nhập Console <svg class="external-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 13V19C18 19.5304 17.7893 20.0391 17.4142 20.4142C17.0391 20.7893 16.5304 21 16 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V8C3 7.46957 3.21071 6.96086 3.58579 6.58579C3.96086 6.21071 4.46957 6 5 6H11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 3H21V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+                                    </ul>
+                                </div>
+                                <!-- Removed Image Column -->
+                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Giải pháp Dropdown (Megamenu) -->
+                    <div class="nav-item has-dropdown">
+                        <a href="#" class="nav-link"><span class="nav-text">Giải pháp</span></a>
+                         <div class="nav-dropdown megamenu">
+                            <div class="megamenu-columns">
+                                <div class="megamenu-column">
+                                    <span class="dropdown-heading">Hợp tác với Claude</span>
+                                    <ul>
+                                        <li><a href="https://www.anthropic.com/solutions/agents" class="dropdown-link">Các tác nhân API</a></li>
+                                        <li><a href="https://www.anthropic.com/solutions/coding" class="dropdown-link">Mã hóa</a></li>
+                                        <li><a href="https://www.anthropic.com/solutions/customer-support" class="dropdown-link">Hỗ trợ khách hàng</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Removed Image Column -->
+                            </div>
+                         </div>
+                    </div>
+
+                     <!-- Nghiên cứu Dropdown (Megamenu) -->
+                    <div class="nav-item has-dropdown">
+                        <a href="#" class="nav-link"><span class="nav-text">Nghiên cứu</span></a>
+                        <div class="nav-dropdown megamenu">
+                            <div class="megamenu-columns">
+                                <div class="megamenu-column">
+                                    <span class="dropdown-heading">Nghiên cứu</span>
+                                    <ul>
+                                        <li><a href="https://www.anthropic.com/research" class="dropdown-link">Tổng quan</a></li>
+                                        <li><a href="https://www.anthropic.com/economic-index" class="dropdown-link">Chỉ số kinh tế</a></li>
+                                    </ul>
+                                    <span class="dropdown-heading">Gia đình kiểu mẫu Claude</span>
+                                    <ul>
+                                        <li><a href="https://www.anthropic.com/claude/sonnet" class="dropdown-link">Claude 3.7 Sonnet</a></li>
+                                        <li><a href="ht tps://www.anthropic.com/claude/haiku" class="dropdown-link">Claude 3.5 Haiku</a></li>
+                                        <li><a href="https://www.anthropic.com/news/claude-3-family" class="dropdown-link">Claude 3.7 Opus</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Removed Image Column -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cam kết Dropdown (Megamenu) -->
+                    <div class="nav-item has-dropdown">
+                        <a href="#" class="nav-link"><span class="nav-text">Cam kết</span></a>
+                        <div class="nav-dropdown megamenu">
+                             <div class="megamenu-columns">
+                                <div class="megamenu-column">
+                                    <span class="dropdown-heading">Sáng kiến</span>
+                                    <ul>
+                                        <li><a href="https://www.anthropic.com/transparency" class="dropdown-link">Tính minh bạch</a></li>
+                                        <li><a href="https://www.anthropic.com/news/announcing-our-updated-responsible-scaling-policy" class="dropdown-link">Chính sách mở rộng có trách nhiệm</a></li>
+                                    </ul>
+                                    <span class="dropdown-heading">Trung tâm tin cậy</span>
+                                    <ul>
+                                        <li><a href="https://trust.anthropic.com/" class="dropdown-link">Bảo mật và tuân thủ</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Removed Image Column -->
+                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Tìm hiểu Dropdown (Megamenu) -->
+                    <div class="nav-item has-dropdown">
+                        <a href="#" class="nav-link"><span class="nav-text">Tìm hiểu</span></a>
+                        <div class="nav-dropdown megamenu">
+                            <div class="megamenu-columns">
+                                <div class="megamenu-column">
+                                    <span class="dropdown-heading">Tài nguyên học tập</span>
+                                    <ul>
+                                        <li><a href="https://www.anthropic.com/customers" class="dropdown-link">Câu chuyện của khách hàng</a></li>
+                                        <li><a href="https://www.anthropic.com/engineering" class="dropdown-link">Kỹ thuật tại Anthropic</a></li>
+                                        <li><a href="https://www.anthropic.com/learn" class="dropdown-link">Học viện nhân học</a></li>
+                                    </ul>
+                                    <span class="dropdown-heading">Công ty</span>
+                                    <ul>
+                                        <li><a href="https://www.anthropic.com/company" class="dropdown-link">Về</a></li>
+                                        <li><a href="https://www.anthropic.com/careers" class="dropdown-link">Nghề nghiệp</a></li>
+                                    </ul>
+                                </div>
+                                <!-- Removed Image Column -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tin tức (No Dropdown) -->
+                    <div class="nav-item no-dropdown">
+                        <a class="nav-link" href="#"><span class="nav-text">Tin tức</span></a>
+                    </div>
+
+                </nav>
+                <a href="https://claude.ai/login?returnTo=%2F%3F" class="button-cta nav-cta" rel="noopener" target="_blank" aria-label="Thử Claude">
+                    <span>Hãy thử Claude</span>
+                </a>
+                <button class="mobile-icon" aria-label="Menu điều hướng" aria-expanded="false">
+                    <svg class="icon icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                     <svg class="icon icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Nav Container -->
+        <div class="mobile-nav-container">
+             <nav class="mobile-nav">
+                <!-- Mobile nav content will be cloned here by JS -->
+             </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+        <!-- ... (Nội dung phần Main giữ nguyên) ... -->
+          <article class="post-detail-wrapper">
+            <div class="page-wrapper">
+                <div class="post-heading animate-on-scroll">
+                    <div class="post-detail-types-subjects">
+                        <span class="post-subject chip detail-s">Thông báo</span>
+                    </div>
+                    <h1 class="h1 post-title">Giới thiệu Giao Thức Ngữ Cảnh Mô Hình</h1>
+                    <div class="post-timestamp text-label">
+                        25 tháng 11, 2024<span class="is-bullet">•</span>3 phút đọc
+                    </div>
+                </div>
+
+                <div class="post-detail-body">
+                    <div class="post-hero animate-on-scroll">
+                        <figure class="image-with-caption">
+                            <img alt="Minh họa trừu tượng về ngữ cảnh quan trọng kết nối đến một trung tâm" loading="eager" decoding="async" src="https://cdn.sanity.io/images/4zrzovbb/website/3aabd8804251c0364cbde9d2e4be6dc8e8c2faec-2880x1620.png">
+                        </figure>
+                    </div>
+
+                    <article class="post-content">
+                        <div class="body-text reading-column">
+                            <p class="animate-on-scroll">Hôm nay, chúng tôi công bố mã nguồn mở của <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer">Giao thức Ngữ cảnh Mô hình (<span class="technical-term">Model Context Protocol <span class="english">MCP</span></span>)</a>, một tiêu chuẩn mới để kết nối các trợ lý AI (<span class="technical-term">AI assistants</span>) với các hệ thống lưu trữ dữ liệu, bao gồm kho nội dung (<span class="technical-term">content repositories</span>), công cụ kinh doanh (<span class="technical-term">business tools</span>), và môi trường phát triển (<span class="technical-term">development environments</span>). Mục tiêu của nó là giúp các mô hình tiên tiến (<span class="technical-term">frontier models</span>) tạo ra phản hồi tốt hơn, phù hợp hơn.</p>
+                            <p class="animate-on-scroll">Khi các trợ lý AI (<span class="technical-term">AI assistants</span>) được áp dụng rộng rãi, ngành công nghiệp đã đầu tư mạnh vào khả năng của mô hình, đạt được những tiến bộ nhanh chóng về khả năng suy luận và chất lượng. Tuy nhiên, ngay cả những mô hình tinh vi nhất cũng bị hạn chế bởi sự cô lập khỏi dữ liệu bị mắc kẹt sau các silo thông tin và hệ thống cũ. Mỗi nguồn dữ liệu mới đòi hỏi một triển khai tùy chỉnh riêng, khiến các hệ thống thực sự kết nối khó có thể mở rộng.</p>
+                            <p class="animate-on-scroll">MCP giải quyết thách thức này. Nó cung cấp một tiêu chuẩn mở, phổ quát để kết nối các hệ thống AI với các nguồn dữ liệu, thay thế các tích hợp phân mảnh bằng một giao thức duy nhất. Kết quả là một cách đơn giản hơn, đáng tin cậy hơn để cung cấp cho các hệ thống AI quyền truy cập vào dữ liệu chúng cần.</p>
+
+                            <h2 class="display-sans-m post-section animate-on-scroll" id="model-context-protocol">Giao thức Ngữ cảnh Mô hình (<span class="technical-term">Model Context Protocol <span class="english">MCP</span></span>)</h2>
+                            <p class="animate-on-scroll">Giao thức Ngữ cảnh Mô hình là một tiêu chuẩn mở cho phép các nhà phát triển xây dựng các kết nối hai chiều, an toàn giữa các nguồn dữ liệu của họ và các công cụ hỗ trợ bởi AI (<span class="technical-term">AI-powered tools</span>). Kiến trúc rất đơn giản: nhà phát triển có thể hoặc là cung cấp dữ liệu của họ thông qua các máy chủ MCP hoặc xây dựng các ứng dụng AI kết nối với các máy chủ này.</p>
+                            <p class="animate-on-scroll">Hôm nay, chúng tôi giới thiệu ba thành phần chính của Giao thức Ngữ cảnh Mô hình cho các nhà phát triển:</p>
+                            <ul class="animate-on-scroll">
+                                <li><a href="https://github.com/modelcontextprotocol" target="_blank" rel="noopener noreferrer">Đặc tả kỹ thuật và Bộ công cụ phát triển phần mềm (<span class="technical-term">SDKs</span>)</a> của Giao thức Ngữ cảnh Mô hình</li>
+                                <li>Hỗ trợ máy chủ MCP cục bộ trong <a href="https://claude.ai/download" target="_blank" rel="noopener noreferrer">ứng dụng Claude Desktop</a></li>
+                                <li>Một <a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener noreferrer"> kho lưu trữ mã nguồn mở (<span class="technical-term">open-source repository</span>)</a> các máy chủ MCP (<span class="technical-term">MCP servers</span>)</li>
+                            </ul>
+                            <p class="animate-on-scroll">Claude 3.5 Sonnet rất thành thạo trong việc xây dựng nhanh chóng các triển khai máy chủ MCP, giúp các tổ chức và cá nhân dễ dàng kết nối nhanh chóng các bộ dữ liệu quan trọng nhất của họ với một loạt các công cụ hỗ trợ bởi AI. Để giúp các nhà phát triển bắt đầu khám phá, chúng tôi đang chia sẻ các máy chủ MCP được xây dựng sẵn cho các hệ thống doanh nghiệp phổ biến như Google Drive, Slack, GitHub, Git, Postgres và Puppeteer.</p>
+                            <p class="animate-on-scroll">Những người áp dụng sớm như Block và Apollo đã tích hợp MCP vào hệ thống của họ, trong khi các công ty công cụ phát triển bao gồm Zed, Replit, Codeium và Sourcegraph đang làm việc với MCP để nâng cao nền tảng của họ cho phép các tác tử AI (<span class="technical-term">AI agents</span>) truy xuất thông tin liên quan tốt hơn để hiểu sâu hơn về ngữ cảnh xung quanh một nhiệm vụ lập trình và tạo ra mã sắc thái và chức năng hơn với ít lần thử hơn.</p>
+                            <blockquote class="quote animate-on-scroll">
+                                <p>"Tại Block, mã nguồn mở (<span class="technical-term">open source</span>) không chỉ là một mô hình phát triển — đó là nền tảng công việc của chúng tôi và là cam kết tạo ra công nghệ thúc đẩy sự thay đổi có ý nghĩa và phục vụ như một lợi ích công cộng cho tất cả mọi người,” Dhanji R. Prasanna, Giám đốc Công nghệ tại Block cho biết. “Các công nghệ mở như Giao thức Ngữ cảnh Mô hình là những cây cầu kết nối AI với các ứng dụng thực tế, đảm bảo sự đổi mới dễ tiếp cận, minh bạch và bắt nguồn từ sự hợp tác. Chúng tôi rất vui mừng được hợp tác về một giao thức và sử dụng nó để xây dựng các hệ thống có tính tác tử, giúp loại bỏ gánh nặng cơ học để mọi người có thể tập trung vào sự sáng tạo.”</p>
+                            </blockquote>
+                            <p class="animate-on-scroll">Thay vì duy trì các trình kết nối riêng biệt cho từng nguồn dữ liệu, giờ đây các nhà phát triển có thể xây dựng dựa trên một giao thức tiêu chuẩn. Khi hệ sinh thái trưởng thành, các hệ thống AI sẽ duy trì ngữ cảnh khi chúng di chuyển giữa các công cụ và bộ dữ liệu khác nhau, thay thế các tích hợp phân mảnh ngày nay bằng một kiến trúc bền vững hơn.</p>
+
+                            <h2 class="display-sans-m post-section animate-on-scroll" id="getting-started">Bắt đầu</h2>
+                            <p class="animate-on-scroll">Các nhà phát triển có thể bắt đầu xây dựng và thử nghiệm các trình kết nối MCP ngay hôm nay. Tất cả các gói <a href="http://claude.ai/" target="_blank" rel="noopener noreferrer">Claude.ai</a> đều hỗ trợ kết nối các máy chủ MCP với ứng dụng Claude Desktop.</p>
+                            <p class="animate-on-scroll">Khách hàng Claude for Work có thể bắt đầu thử nghiệm các máy chủ MCP cục bộ, kết nối Claude với các hệ thống và bộ dữ liệu nội bộ. Chúng tôi sẽ sớm cung cấp bộ công cụ dành cho nhà phát triển để triển khai các máy chủ MCP sản xuất từ xa có thể phục vụ toàn bộ tổ chức Claude for Work của bạn.</p>
+                            <p class="animate-on-scroll">Để bắt đầu xây dựng:</p>
+                            <ul class="animate-on-scroll">
+                                <li>Cài đặt các máy chủ MCP được xây dựng sẵn thông qua <a href="https://claude.ai/download" target="_blank" rel="noopener noreferrer">ứng dụng Claude Desktop</a></li>
+                                <li>Thực hiện theo <a href="https://modelcontextprotocol.io/quickstart" target="_blank" rel="noopener noreferrer">hướng dẫn nhanh</a> của chúng tôi để xây dựng máy chủ MCP đầu tiên của bạn</li>
+                                <li>Đóng góp vào <a href="https://github.com/modelcontextprotocol" target="_blank" rel="noopener noreferrer">kho lưu trữ mã nguồn mở</a> của chúng tôi về các trình kết nối và triển khai</li>
+                            </ul>
+
+                            <h2 class="display-sans-m post-section animate-on-scroll" id="an-open-community">Một cộng đồng mở</h2>
+                            <p class="animate-on-scroll">Chúng tôi cam kết xây dựng MCP như một dự án và hệ sinh thái mã nguồn mở, hợp tác, và chúng tôi mong muốn nhận được phản hồi của bạn. Cho dù bạn là nhà phát triển công cụ AI (<span class="technical-term">AI tool developer</span>), một doanh nghiệp đang tìm cách tận dụng dữ liệu hiện có, hay một người dùng sớm đang khám phá những giới hạn mới, chúng tôi mời bạn cùng xây dựng tương lai của AI nhận biết ngữ cảnh.</p>
+                        </div>
+                    </article>
+
+                    <div class="social-share animate-on-scroll">
+                        <span class="share-label detail-m bold">Chia sẻ:</span>
+                        <a href="https://twitter.com/intent/tweet?text=Gi%E1%BB%9Bi%20thi%E1%BB%87u%20Giao%20th%E1%BB%A9c%20Ng%E1%BB%AF%20c%E1%BA%A3nh%20M%C3%B4%20h%C3%ACnh%20(MCP)%20-%20Anthropic&url=https://www.anthropic.com/news/model-context-protocol" target="_blank" rel="noopener noreferrer" aria-label="Chia sẻ trên X">
+                            <svg class="icon" width="24" height="24" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="currentColor"></path></svg>
+                        </a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.anthropic.com/news/model-context-protocol" target="_blank" rel="noopener noreferrer" aria-label="Chia sẻ trên LinkedIn">
+                             <svg class="icon" width="24" height="24" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" fill="currentColor"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <section class="related-posts-section" data-theme="light">
+                <div class="page-wrapper card-row-root">
+                     <h2 class="related-title h2 animate-on-scroll">Bài viết liên quan</h2>
+                    <div class="card-row-items">
+                        <a class="card-link-root animate-on-scroll" href="#">
+                            <div class="card-root">
+                                <div class="card-content card-no-illustration">
+                                    <div class="card-header-wrapper">
+                                        <div class="card-headline-summary-wrapper">
+                                            <p class="detail-m card-category">Tin tức</p>
+                                            <h3 class="card-headline display-sans-s bold">Phát hiện và Chống lại việc Sử dụng Claude với Mục đích Xấu: Tháng 3 năm 2025</h3>
+                                        </div>
+                                        <p class="detail-m agate card-date">23 tháng 4, 2025</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="card-link-root animate-on-scroll" href="#">
+                             <div class="card-root">
+                                <div class="card-content card-no-illustration">
+                                    <div class="card-header-wrapper">
+                                        <div class="card-headline-summary-wrapper">
+                                            <p class="detail-m card-category">Tin tức</p>
+                                            <h3 class="card-headline display-sans-s bold">Cách tiếp cận của chúng tôi để Hiểu và Giải quyết các Tác hại của AI</h3>
+                                        </div>
+                                        <p class="detail-m agate card-date">22 tháng 4, 2025</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="card-link-root animate-on-scroll" href="#">
+                            <div class="card-root">
+                                <div class="card-content card-no-illustration">
+                                    <div class="card-header-wrapper">
+                                        <div class="card-headline-summary-wrapper">
+                                            <p class="detail-m card-category">Tin tức</p>
+                                            <h3 class="card-headline display-sans-s bold">Claude đưa nghiên cứu đến những tầm cao mới</h3>
+                                        </div>
+                                        <p class="detail-m agate card-date">15 tháng 4, 2025</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer" class="site-footer" role="contentinfo" aria-label="Chân trang">
+        <!-- ... (Nội dung Footer giữ nguyên cấu trúc HTML) ... -->
+         <div class="page-wrapper">
+            <div class="footer-top-wrapper animate-on-scroll">
+                 <a aria-label="Quay lại trang chủ" class="footer-logo-link" href="#">
+                     <span class="logo-text footer-logo-text">Anthropic</span>
+                </a>
+                <nav class="footer-columns-wrapper" aria-label="Điều hướng chân trang">
+                    <div class="footer-column-section">
+                        <div class="footer-list-section">
+                            <h3 class="detail-m bold uppercase">Sản phẩm</h3>
+                            <ul class="footer-list">
+                                <li><a class="footer-list-item detail-m agate" href="#">Tổng quan Claude</a></li>
+                                <li><a class="footer-list-item detail-m agate" href="#">Gói Claude team</a></li>
+                                <li><a class="footer-list-item detail-m agate" href="#">Gói Claude enterprise</a></li>
+                                <li><a class="footer-list-item detail-m agate" href="#">Tải ứng dụng Claude</a></li>
+                            </ul>
+                        </div>
+                         <div class="footer-list-section">
+                            <h3 class="detail-m bold uppercase">Nền tảng API</h3>
+                            <ul class="footer-list">
+                                <li><a class="footer-list-item detail-m agate" href="#">Tổng quan API</a></li>
+                                <li><a class="footer-list-item detail-m agate" href="#" target="_blank" rel="noopener">Tài liệu Nhà phát triển</a></li>
+                                <li><a class="footer-list-item detail-m agate" href="#" target="_blank" rel="noopener">Đăng nhập Console</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                     <div class="footer-column-section">
+                         <div class="footer-list-section">
+                            <h3 class="detail-m bold uppercase">Cam kết</h3>
+                            <ul class="footer-list">
+                                <li><a class="footer-list-item detail-m agate" href="#">Chính sách Mở rộng Có trách nhiệm</a></li>
+                                <li><a class="footer-list-item detail-m agate" href="#" target="_blank" rel="noopener">Bảo mật và Tuân thủ</a></li>
+                            </ul>
+                        </div>
+                         <div class="footer-list-section">
+                            <h3 class="detail-m bold uppercase">Tìm hiểu</h3>
+                            <ul class="footer-list">
+                                 <li><a class="footer-list-item detail-m agate" href="#">Câu chuyện Khách hàng</a></li>
+                                 <li><a class="footer-list-item detail-m agate" href="#">Tuyển dụng</a></li>
+                                 <li><a class="footer-list-item detail-m agate" href="#">Tin tức</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                     <div class="footer-column-section">
+                         <div class="footer-list-section">
+                            <h3 class="detail-m bold uppercase">Điều khoản và chính sách</h3>
+                            <ul class="footer-list">
+                                <li><a class="footer-list-item detail-m agate" href="#">Lựa chọn quyền riêng tư</a></li>
+                                <li><a class="footer-list-item detail-m agate" href="#">Chính sách quyền riêng tư</a></li>
+                                <li><a class="footer-list-item detail-m agate" href="#">Điều khoản dịch vụ - người dùng</a></li>
+                                <li><a class="footer-list-item detail-m agate" href="#">Điều khoản dịch vụ - thương mại</a></li>
+                                <li><a class="footer-list-item detail-m agate" href="#">Chính sách sử dụng</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="footer-bottom-wrapper animate-on-scroll">
+                <small class="detail-m agate footer-copyright" role="contentinfo">© 2024 Anthropic PBC</small>
+                <div class="footer-social-icons" role="navigation" aria-label="Liên kết mạng xã hội">
+                    <a href="#" aria-label="Kênh YouTube" target="_blank" rel="noopener noreferrer">
+                         <svg class="icon" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.41 19.83,18.65C19.17,18.8 18.29,18.9 17.19,18.97C16.09,19.04 15.19,19.07 14.5,19.07L14.3,19.06C13.05,19.06 11.8,19.03 10.55,18.96C9.3,18.9 8.05,18.8 6.8,18.65C5.9,18.41 5.32,17.73 5.06,16.83C4.79,15.8 4.66,14.19 4.66,12L4.6,11.16C4.6,10.56 4.63,9.87 4.69,9.07C4.76,8.27 4.84,7.64 4.97,7.17C5.22,6.27 5.8,5.59 6.7,5.35C7.36,5.2 8.24,5.1 9.34,5.03C10.44,4.96 11.34,4.93 12,4.93C13.25,4.93 14.5,4.96 15.75,5.03C16.97,5.1 18.19,5.2 19.4,5.35C20.3,5.59 20.88,6.27 21.13,7.17Z" /></svg>
+                    </a>
+                    <a href="#" aria-label="Trang LinkedIn" target="_blank" rel="noopener noreferrer">
+                         <svg class="icon" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Hồ sơ X (Twitter cũ)" target="_blank" rel="noopener noreferrer">
+                         <svg class="icon" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
